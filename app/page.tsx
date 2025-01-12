@@ -152,9 +152,9 @@ export default function Page({
               },
             }}
           >
-            {packages.items.map((item) => (
+            {packages.items.map((item, index) => (
               <motion.div
-                key={item.updated}
+                key={index}
                 transition={{ duration: 0.5 }}
                 variants={{
                   hidden: { opacity: 0, y: 20 },

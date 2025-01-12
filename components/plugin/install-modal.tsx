@@ -10,27 +10,27 @@ import { Version } from "@/lib/api";
 function commandBuilder(
   verInfo: Version,
   pkg: GetPackageResponse,
-  version?: string
+  version?: string,
 ): Result<string, string> {
   if (verInfo.packageManager == "lip") {
     if (verInfo.source == "github") {
       // lip--github
       return Result.Ok(
-        `lip install ${pkg.identifier}${version ? `@${version}` : ""}`
+        `lip install ${pkg.identifier}${version ? `@${version}` : ""}`,
       );
     }
   } else if (verInfo.packageManager == "pip") {
     if (verInfo.source == "pypi") {
       // pip--pypi
       return Result.Ok(
-        `pip install ${pkg.identifier}${version ? `==${version}` : ""}`
+        `pip install ${pkg.identifier}${version ? `==${version}` : ""}`,
       );
     } else if (verInfo.source == "github") {
       // pip--github
       return Result.Ok(
         `pip install git+https://${pkg.identifier}${
           version ? `@${version}` : ""
-        }`
+        }`,
       );
     }
   } else if (verInfo.packageManager == "none") {
@@ -58,13 +58,13 @@ export default function InstallModal({
   const version = pkg?.versions.find((t) => t.version === versionStr);
 
   const releaseTimeString = new Date(
-    version?.releasedAt || ""
+    version?.releasedAt || "",
   ).toLocaleString();
 
   const installCmd = commandBuilder(
     version as Version,
     pkg,
-    isVersionSelected ? versionStr : ""
+    isVersionSelected ? versionStr : "",
   );
 
   return (
